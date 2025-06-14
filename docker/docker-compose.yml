@@ -1,0 +1,40 @@
+## YAML Template.
+---
+services:
+  #our applicatioin container image (php from Dockerfile)
+  app:
+    #how build with dockerfile
+    build:
+      #dockerfile in this directory
+      context: ./
+      dockerfile: Dockerfile
+    container_name: ie-journal-app
+    restart: always
+    # dir app in container
+    working_dir: /var/www
+    # ties dir from this with this container
+    volumes:
+      - ../src:/var/www
+  # second container from nginx image.
+  nginx:
+    image: nginx:1.28.0-alpine-slim
+    container_name: ie-journal-nginx
+    restart: always
+    # ports on local machine & inside container. 8000 port in section2 folder
+    ports:
+      - 8001:80
+    volumes:
+      # setup app directory
+      - ../src:/var/www
+      # add symlink to nginx configuration folder local machine -> folder in container
+      - ./nginx:/etc/nginx/conf.d
+  db:
+    image: mysql
+    container_name: ie-journal-mysql
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    restart: always
+    ports:
+      - 8307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: journal
