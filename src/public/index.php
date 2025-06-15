@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-spl_autoload_register (function($path){
-    require_once __DIR__ . '/../' . str_replace('\\', '/', lcfirst($path) . '.php');
-});
-
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\HomeController;
 
