@@ -1,2 +1,4 @@
 /Documentation
 /docker/storage
+/src/vendor
+/src/composer.lock
