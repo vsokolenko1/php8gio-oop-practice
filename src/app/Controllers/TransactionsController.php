@@ -14,7 +14,7 @@ class TransactionsController {
     
     public function create(): string {
 
-        return '<form action="/transaction/create" method ="post">'
+        return '<form action="/transactions/create" method ="post">'
         . '<input type="text" name="amount" />'
                 . '</form>';
         
