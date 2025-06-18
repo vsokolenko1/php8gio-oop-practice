@@ -7,6 +7,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\HomeController;
 use App\Controllers\TransactionsController;
 
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 define('VIEW_PATH', __DIR__ . '/../app/views');
 
 try {
