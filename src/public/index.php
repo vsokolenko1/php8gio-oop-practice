@@ -7,6 +7,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\HomeController;
 use App\Controllers\TransactionsController;
 
+define('VIEW_PATH', __DIR__ . '/../app/views');
+  
 $route = new App\Route();
 
 $route  ->get('/', [HomeController::class, 'index'])

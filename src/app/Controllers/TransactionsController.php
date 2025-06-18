@@ -4,26 +4,34 @@ declare (strict_types=1);
 
 namespace App\Controllers;
 
+use App\View;
+
 class TransactionsController {
     
-    public function index(): string {
+    public function index(): View {
         
-        return 'Transaction class & index method';
+        return View::make('transactions/index', ['title'    =>  'Transactions Page']);
         
     }
     
-    public function create(): string {
+    public function create(): View {
 
-        return '<form action="/transactions/create" method ="post">'
-        . '<input type="text" name="amount" />'
-                . '</form>';
+        return View::make('transactions/create', ['title'    =>  'Create transaction']);
         
     }
     
     public function store() {
         
-        return $amount = $_POST['amount'];
+        //todo check data from post amount
+        $amount = $_POST['amount'];
+        return $amount;
         
+    }
+    
+    public function upload() {
+        
+        header('Location: /');
+        exit();
     }
     
 }
