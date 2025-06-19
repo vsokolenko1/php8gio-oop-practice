@@ -29,12 +29,12 @@ services:
       # add symlink to nginx configuration folder local machine -> folder in container
       - ./nginx:/etc/nginx/conf.d
   db:
-    image: mysql
+    image: mysql:8.0
     container_name: ie-journal-mysql
     volumes:
       - ./storage/mysql:/var/lib/mysql
     restart: always
-    ports:
-      - 8307:3306
     environment:
-      MYSQL_ROOT_PASSWORD: journal
+      MYSQL_ROOT_PASSWORD: root    
+    ports:
+      - 3307:3306
