@@ -1,0 +1,38 @@
+/* 
+    Created on : 18 Jun 2025, 18:54:25
+    Author     : vladyslav
+*/
+
+body {
+    background: #e6e6e6;
+    height: 100%;
+}
+
+header {
+    background: #b6b6b6;
+}
+ul {
+    display: flex;
+    list-style-type: none;
+    height: 70px;
+}
+li {
+    line-height: 70px;   
+    padding: 0px 12px;
+}
+li:hover {
+    background-color: #999999;
+}
+li:hover a{
+    color: #fff;
+}
+
+li a {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+main {
+    min-height: 400px;
+}
