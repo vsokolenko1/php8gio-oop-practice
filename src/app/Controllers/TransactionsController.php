@@ -4,16 +4,26 @@ declare (strict_types=1);
 
 namespace App\Controllers;
 
-use App\App;
+use App\Models\Transaction;
+use App\Models\User;
 use App\View;
 
 class TransactionsController {
     
-    public function index(): View {
-
-        $db = App::db();
+    public function index(): View {        
         
-        return View::make('transactions/index', ['title'    =>  'Transactions Page']);
+        $email = 'vsokolenko1@gmail.com';
+        
+        $userModel = new User();
+        $user = $userModel->findByEmail($email);        
+        
+        $transactionModel = new Transaction();
+        $transactions = $transactionModel->load($user->id);
+        
+        return View::make('transactions/index', [
+            'title'    =>  'Transactions Page',
+            'transactions'  =>  $transactions
+        ]);
         
     }
     

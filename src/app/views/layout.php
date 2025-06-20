@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?=$title??null?></title>
-        <link href="/css/main.css" rel="stylesheet" />
+        <link href="/css/main.css?<?= rand(1, 9999)?>" rel="stylesheet" />
     </head>
     <body>
         <header>
@@ -17,9 +17,14 @@
             </div>
         </header>
         <hr>
-        <main>
+        <table>
+            <tr>
+                <td>Test table</td>
+            </tr>
+        </table>
+        <!--<main>-->
         {{content}}
-        </main>
+        <!--</main>-->
         <hr>
         <footer>
             <center>All rights reserved &copy;2025 <a href="mailto: vsokolenko1@gmail.com">Vladyslav Sokolenko</a></center>
