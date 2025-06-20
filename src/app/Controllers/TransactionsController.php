@@ -4,19 +4,14 @@ declare (strict_types=1);
 
 namespace App\Controllers;
 
+use App\App;
 use App\View;
 
 class TransactionsController {
     
     public function index(): View {
 
-        try {
-        $db = new \PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['DB_USER'], $_ENV['DB_PASS'], [
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ
-        ]);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), $e->getCode());
-        }
+        $db = App::db();
         
         return View::make('transactions/index', ['title'    =>  'Transactions Page']);
         
