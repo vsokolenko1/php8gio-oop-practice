@@ -9,10 +9,10 @@
         <header>
             <div>
                 <ul id="mainMenu">
-                    <li><a href="/">Home page</a></li>
-                    <li><a href="/transactions">All transactions</a></li>
-                    <li><a href="/transactions/create">Create transaction</a></li>
-                    <li><a href="/non-existen-page">Non existent page</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/transactions">Transactions</a></li>
+                    <li><a href="/transactions/create">Upload</a></li>
+                    <li><a href="/non-existen-page">Upload multi</a></li>
                 </ul>
             </div>
         </header>

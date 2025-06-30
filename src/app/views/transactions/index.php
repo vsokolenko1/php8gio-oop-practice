@@ -1,3 +1,6 @@
+<?php
+use App\Helpers\Helper;
+?>
 <table>
     <thead>
         <tr>
@@ -11,21 +14,20 @@
         <?php if (!empty($transactions)): ?>
             <?php foreach ($transactions as $transaction): ?>
                 <tr>
-                    <!--<td><?//= formatDate($transaction['date']) ?></td>-->
-                    <td><?= $transaction->date ?></td>
+                    <td><?= Helper::dateFormat($transaction->date) ?></td>
                     <td><?= $transaction->check ?></td>
                     <td><?= $transaction->description ?></td>
                     <td>
                         <?php if ($transaction->amount < 0): ?>
                             <span style="color: red;">
-                                <?=$transaction->amount //formatDollarAmount($transaction['amount']) ?>
+                                <?=Helper::amountFormat($transaction->amount) //formatDollarAmount($transaction['amount']) ?>
                             </span>
                         <?php elseif ($transaction->amount > 0): ?>
                             <span style="color: green;">
-                                <?=$transaction->amount //formatDollarAmount($transaction['amount']) ?>
+                                <?=Helper::amountFormat($transaction->amount) //formatDollarAmount($transaction['amount']) ?>
                             </span>                                
                         <?php else: ?>
-                            <?=$transaction->amount //formatDollarAmount($transaction['amount']) ?>
+                            <?=Helper::amountFormat($transaction->amount) //formatDollarAmount($transaction['amount']) ?>
                         <?php endif ?>
                     </td>
                 </tr>
@@ -35,15 +37,15 @@
     <tfoot>
         <tr>
             <th colspan="3">Total Income:</th>
-            <td><?php // formatDollarAmount($totals['totalIncome']) ?? 0 ?>    </td>
+            <td><?=Helper::amountFormat($totals->totalIncome) ?? 0 ?>    </td>
         </tr>
         <tr>
             <th colspan="3">Total Expense:</th>
-            <td><?php //= //formatDollarAmount($totals['totalExpense']) ?? 0 ?></td>
+            <td><?=Helper::amountFormat($totals->totalExpense) ?? 0 ?></td>
         </tr>
         <tr>
             <th colspan="3">Net Total:</th>
-            <td><?php //= //formatDollarAmount($totals['netTotal']) ?? 0 ?></td>
+            <td><?=Helper::amountFormat($totals->netTotal) ?? 0 ?></td>
         </tr>
     </tfoot>
 </table>

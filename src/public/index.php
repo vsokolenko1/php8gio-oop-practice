@@ -15,13 +15,13 @@ $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 define('VIEW_PATH', __DIR__ . '/../app/views');
+define('STORAGE_PATH', __DIR__ . '/../storage');
 
 $route = new Route();
 
 $route  ->get('/', [HomeController::class, 'index'])
         ->get('/transactions', [TransactionsController::class, 'index'])
         ->get('/transactions/create', [TransactionsController::class, 'create'])
-        ->get('/transactions/upload', [TransactionsController::class, 'upload'])
         ->post('/transactions/create', [TransactionsController::class, 'store']);
 
 (new App($route, ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']], 
