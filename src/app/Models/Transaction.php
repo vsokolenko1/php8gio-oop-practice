@@ -37,7 +37,10 @@ class Transaction extends Model {
             $this->db->beginTransaction();
 
             foreach ($transactions as $transaction) {
-
+                
+                //if we have empty date in row in the transaction file
+                if(empty($transaction['0'])) continue;
+                
                 $transaction = [
                     'userId' => $userId,
                     'amount' => str_replace(['$', ','], '', $transaction[3]),

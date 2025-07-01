@@ -11,5 +11,6 @@ abstract class FileException extends \Exception {
     protected const FILE_MAX_SIZE       = 'File max size is 2Mb.';
     protected const FILE_WRONG_EXTENSION= 'File wrong extension.';
     protected const FILE_NOT_EXISTS     = 'File not exists';
+    protected const FILE_NOT_SELECTED   = 'File or files not selected.';
     
 }

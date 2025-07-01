@@ -4,8 +4,9 @@ declare (strict_types=1);
 
 namespace App\Controllers;
 
-use App\Exceptions\UserNotFoundException;
+use App\Exceptions\File\FileException;
 use App\Models\File;
+use App\Models\FileCollection;
 use App\Models\Transaction;
 use App\Models\User;
 use App\View;
@@ -14,21 +15,19 @@ class TransactionsController {
 
     private string $userEmail = 'vsokolenko1@gmail.com';
     private object $user;
-    
+
     public function __construct() {
-        
+
         $userModel = new User();
         try {
-            
-            $this->user = $userModel->findByEmail($this->userEmail);
 
+            $this->user = $userModel->findByEmail($this->userEmail);
         } catch (\Exception $e) {
             echo $e->getMessage();
             exit();
         }
-
     }
-    
+
     public function index(): View {
 
         $transactionModel = new Transaction();
@@ -45,7 +44,7 @@ class TransactionsController {
     public function create(): View {
 
         return View::make('transactions/create', [
-                    'title' => 'Create transaction',
+                    'title' => 'Upload transaction',
                     'formName' => 'Upload your transactions. File must have csv extension.',
         ]);
     }
@@ -54,19 +53,65 @@ class TransactionsController {
 
         $fileModel = new File();
 
-        if ($fileModel->upload($_FILES['file'])) {
+        try {
 
-            $data = $fileModel->read();
+            if ($fileModel->upload($_FILES['file'])) {
 
-            //Save transactions
-            $transactionModel = new Transaction();
-            $transactionModel->save($this->user->id, $data);
+                $data = $fileModel->read();
+
+                //Save transactions
+                $transactionModel = new Transaction();
+                $transactionModel->save($this->user->id, $data);
+            }
+
+            $fileModel->remove();
+
+            header('Location: /transactions');
+            return;
+        } catch (FileException $e) {
+
+            echo $e->getMessage();
+        }
+    }
+
+    public function uploadMulti(): View {
+
+        return View::make('/transactions/uploadmulti', [
+                    'title' => 'Multi upload transactions',
+                    'formName' => 'Multi upload your transactions. File must have csv extension',
+        ]);
+    }
+
+    public function storeMulti() {
+
+        $fileCollectionModel = new FileCollection($_FILES['files']);
+
+        $fileCollectionModel->revert();
+
+        foreach ($fileCollectionModel->getFiles() as $file) {
+
+            $fileModel = new File();
+
+            try {
+
+                if ($fileModel->upload($file)) {
+
+                    $data = $fileModel->read();
+
+                    //Save transactions
+                    $transactionModel = new Transaction();
+                    $transactionModel->save($this->user->id, $data);
+                }
+
+                $fileModel->remove();
+            } catch (FileException $e) {
+
+                echo $e->getMessage();
+                return;
+            }
         }
 
-        $fileModel->remove();
-
         header('Location: /transactions');
-
         return;
     }
 }

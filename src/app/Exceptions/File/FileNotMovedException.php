@@ -9,6 +9,6 @@ namespace App\Exceptions\File;
  */
 class FileNotMovedException extends FileException{
     
-    protected string $message = self::FILE_NOT_MOVED;
+    protected $message = self::FILE_NOT_MOVED;
     
 }

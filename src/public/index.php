@@ -22,7 +22,9 @@ $route = new Route();
 $route  ->get('/', [HomeController::class, 'index'])
         ->get('/transactions', [TransactionsController::class, 'index'])
         ->get('/transactions/create', [TransactionsController::class, 'create'])
-        ->post('/transactions/create', [TransactionsController::class, 'store']);
+        ->get('/transactions/uploadmulti', [TransactionsController::class, 'uploadMulti'])
+        ->post('/transactions/create', [TransactionsController::class, 'store'])
+        ->post('/transactions/uploadmulti', [TransactionsController::class, 'storeMulti']);
 
 (new App($route, ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']], 
         new Config($_ENV)
