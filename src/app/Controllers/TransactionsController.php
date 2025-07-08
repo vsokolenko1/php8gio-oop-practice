@@ -41,77 +41,69 @@ class TransactionsController {
         ]);
     }
 
-    public function create(): View {
+    public function upload(): View {
 
-        return View::make('transactions/create', [
+        return View::make('transactions/upload', [
                     'title' => 'Upload transaction',
                     'formName' => 'Upload your transactions. File must have csv extension.',
         ]);
     }
 
-    public function store() {
+    public function multiUpload(): View {
 
-        $fileModel = new File();
-
-        try {
-
-            if ($fileModel->upload($_FILES['file'])) {
-
-                $data = $fileModel->read();
-
-                //Save transactions
-                $transactionModel = new Transaction();
-                $transactionModel->save($this->user->id, $data);
-            }
-
-            $fileModel->remove();
-
-            header('Location: /transactions');
-            return;
-        } catch (FileException $e) {
-
-            echo $e->getMessage();
-        }
-    }
-
-    public function uploadMulti(): View {
-
-        return View::make('/transactions/uploadmulti', [
+        return View::make('/transactions/multiupload', [
                     'title' => 'Multi upload transactions',
                     'formName' => 'Multi upload your transactions. File must have csv extension',
         ]);
     }
 
-    public function storeMulti() {
+    public function store() {
 
-        $fileCollectionModel = new FileCollection($_FILES['files']);
+        try {
+            
+            if(isset($_FILES['files'])) {
+                
+                $fileCollectionModel = new FileCollection($_FILES['files']);
 
-        $fileCollectionModel->revert();
+                $fileCollectionModel->revert();
 
-        foreach ($fileCollectionModel->getFiles() as $file) {
+                foreach ($fileCollectionModel->getFiles() as $file) {
 
-            $fileModel = new File();
+                    $this->_saveDataFromFile($file);
 
-            try {
-
-                if ($fileModel->upload($file)) {
-
-                    $data = $fileModel->read();
-
-                    //Save transactions
-                    $transactionModel = new Transaction();
-                    $transactionModel->save($this->user->id, $data);
                 }
+                
+            } else {           
 
-                $fileModel->remove();
-            } catch (FileException $e) {
-
-                echo $e->getMessage();
-                return;
+                $this->_saveDataFromFile($_FILES['file']);
+                
             }
+
+            header('Location: /transactions');
+            return;            
+            
+        } catch (FileException $e) {
+
+            echo $e->getMessage();
+            return;
+        }        
+
+    }
+    
+    private function _saveDataFromFile(array $file): void {
+        
+        $fileModel = new File();
+
+        if ($fileModel->upload($file)) {
+
+            $data = $fileModel->read();
+
+            //Save transactions
+            $transactionModel = new Transaction();
+            $transactionModel->save($this->user->id, $data);
         }
 
-        header('Location: /transactions');
-        return;
+        $fileModel->remove();        
+        
     }
 }

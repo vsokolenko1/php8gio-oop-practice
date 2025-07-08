@@ -11,8 +11,8 @@
                 <ul id="mainMenu">
                     <li><a href="/">Home</a></li>
                     <li><a href="/transactions">Transactions</a></li>
-                    <li><a href="/transactions/create">Upload</a></li>
-                    <li><a href="/transactions/uploadmulti">Upload multi</a></li>
+                    <li><a href="/transactions/upload">Upload</a></li>
+                    <li><a href="/transactions/multiupload">Upload multi</a></li>
                 </ul>
             </div>
         </header>
